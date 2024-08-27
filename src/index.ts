@@ -3,6 +3,7 @@ import "./app.scss";
 function main(): void {
   const button = document.querySelector("#testButton");
   button?.addEventListener("click", testSubmitHandler);
+  document.addEventListener("DOMContentLoaded", testImageHandler);
 }
 
 function testSubmitHandler(e: Event): void {
@@ -11,13 +12,17 @@ function testSubmitHandler(e: Event): void {
   outputElement.textContent = "Scripts work!";
 }
 
-function testImageLoader() {
-    const image = document.createElement("img")
-    image.src = require("../assets/test-image.jpg")
-    image.style.width = "200px"
+function testImageHandler(e: Event): void {
+  e.preventDefault();
+  const imageModule = require("../assets/test-image.jpg?as=webp");
+  const imageSrc = imageModule.default || imageModule; // Access the default property if it exists
 
-    const imageWrapper = document.getElementById("imageTest")
-    imageWrapper.appendChild(image)
+  const image = document.createElement("img");
+  image.src = imageSrc;
+  image.style.width = "200px";
+
+  const imageWrapper = document.getElementById("imageTest");
+  imageWrapper.appendChild(image);
 }
 
 main();

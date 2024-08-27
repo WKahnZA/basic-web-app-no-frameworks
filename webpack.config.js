@@ -27,9 +27,21 @@ module.exports = {
       {
         test: /\.(jpe?g|png|gif|svg|webp)$/i,
         use: [
-          process.env.NODE_ENV !== "production"
-            ? "file-loader"
-            : ImageMinimizerPlugin.loader,
+          {
+            loader: "file-loader",
+            options: {
+              name: "[path][name].[ext]",
+            },
+          },
+          {
+            loader: "image-webpack-loader",
+            options: {
+              disable: process.env.NODE_ENV !== "production", // Disable during development
+              webp: {
+                quality: 75,
+              },
+            },
+          },
         ],
       },
     ],
@@ -57,7 +69,23 @@ module.exports = {
     new ImageMinimizerPlugin({
       minimizer: {
         implementation: ImageMinimizerPlugin.imageminMinify,
+        options: {
+          plugins: [
+            ["imagemin-webp", { quality: 75 }],
+          ],
+        },
       },
+      generator: [
+        {
+          preset: "webp",
+          implementation: ImageMinimizerPlugin.imageminGenerate,
+          options: {
+            plugins: [
+              ["imagemin-webp", { quality: 75 }],
+            ],
+          },
+        },
+      ],
     }),
   ],
 

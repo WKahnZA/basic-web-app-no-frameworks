@@ -25,4 +25,4 @@ The purpose of this basic application is to set up a web stack for development t
 - For building production `npm run build` outputs to `/dist` folder.
 
 ## Credits
-Based on https://github.com/AdamGuar/no-frameworks-typescript-app-starter with modifications to use `scss`
+Based on https://github.com/AdamGuar/no-frameworks-typescript-app-starter with modifications to use `scss` and minimizer of images to `webp`.
